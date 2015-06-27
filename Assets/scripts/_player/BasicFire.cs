@@ -3,7 +3,8 @@ using System.Collections;
 
 public class BasicFire : MonoBehaviour {
 
-	public GameObject projectile;
+	//set the prefab of the Projectile here
+	public GameObject projectilePrefab;
 
 	// Use this for initialization
 	void Start () {
@@ -15,7 +16,7 @@ public class BasicFire : MonoBehaviour {
 
 		if (Input.GetButtonDown ("Fire1")) {
 			GameObject projectileInstance;
-			projectileInstance = (GameObject)Instantiate(projectile, transform.position, transform.rotation);
+			projectileInstance = (GameObject)Instantiate(projectilePrefab, transform.position, transform.rotation);
 			projectileInstance.name = "Projectile";
 
 			Rigidbody projectileRbInstance;

@@ -1,29 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EvilHealth : MonoBehaviour{
+public class PlayerHealth : MonoBehaviour {
 	
-	private static EvilHealth _instance;
+	private static PlayerHealth _instance;
 	
 	static int maxHealth;
 	static int currentHealth;
 	static int healthDecrease = 10;
-	public static bool evilIsDead;	
+	static int helmets;
+	public static bool playerIsDead;	
 	
-	public static EvilHealth Instance
+	public static PlayerHealth Instance
 	{
 		get
 		{
 			if(_instance == null)
 			{
-				_instance = GameObject.FindObjectOfType<EvilHealth>();
+				_instance = GameObject.FindObjectOfType<PlayerHealth>();
 				
 				//Tell unity not to destroy this object when loading a new scene!
 				DontDestroyOnLoad(_instance.gameObject);
 				
 				SetMaxHealth (100);
 				SetCurrentHealth (100);
-				evilIsDead = false;
+				int life = HoldInformations.GetLife ();
+				SetHelmets(life);
+				playerIsDead = false;
 			}
 			
 			return _instance;
@@ -42,12 +45,18 @@ public class EvilHealth : MonoBehaviour{
 			return currentHealth;
 		}
 	}
+
+	public static int GetHelmets {
+		get {
+			return helmets;
+		}
+	}
 	
 	public static void UpdateCurrentHealthWhenHit() {
 		currentHealth -= healthDecrease;
 		
 		if (currentHealth <= 0) {
-			evilIsDead = true;
+			playerIsDead = true;
 			
 			// code for what comes after death
 		}
@@ -55,12 +64,17 @@ public class EvilHealth : MonoBehaviour{
 	
 	public static bool IsDead {
 		get {
-			return evilIsDead;
+			return playerIsDead;
 		}
 	}
 	
 	public static void setIsDead(bool isDead) {
-		evilIsDead = isDead;
+		playerIsDead = isDead;
+	}
+
+	public static void SetHelmets (int life)
+	{
+		helmets = life;
 	}
 	
 	// +++++++++++++++ PRIVATE METHODS +++++++++++++++
