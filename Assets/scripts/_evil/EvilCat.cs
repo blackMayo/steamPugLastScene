@@ -2,8 +2,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
-public class Vector3LerpEvilCat3D : MonoBehaviour
+
+public class EvilCat : MonoBehaviour
 {
 	float lerpTime = 1f;
 	float currentLerpTime;
@@ -13,18 +15,22 @@ public class Vector3LerpEvilCat3D : MonoBehaviour
 	
 	Vector3 startPos;
 	Vector3 endPos;
+
+	EvilHealth evilHealth;
 	
 	protected void Start() {
 		AddVectorsToList ();
 		startPos = transform.position;
-		endPos = calculatePositionFromList();
+		endPos = CalculatePositionFromList();
+		evilHealth = EvilHealth.Instance;
+
 	}
 	
 	protected void Update() {
 		//reset when we press spacebar
 		// after shooting - insert FireHairBall in here!
 		if (Input.GetKeyDown(KeyCode.Space)) {
-			UpdatePositionAfterShooting ();
+			CalculateNewPosition ();
 		}
 		
 		IncrementTimer ();
@@ -37,12 +43,12 @@ public class Vector3LerpEvilCat3D : MonoBehaviour
 		
 	}
 	
-	void UpdatePositionAfterShooting ()
+	void CalculateNewPosition ()
 	{
 		currentLerpTime = 0f;
 		startPos = transform.position;
 		float ypsilon = startPos.y;
-		newPositionFromList = calculatePositionFromList ();
+		newPositionFromList = CalculatePositionFromList ();
 		if (newPositionFromList.y == ypsilon) {
 			endPos = startPos;
 		}
@@ -72,10 +78,52 @@ public class Vector3LerpEvilCat3D : MonoBehaviour
 		positionsList.Add (new Vector3(-3.0f, 23.0f, 0.0f));
 	}
 	
-	Vector3 calculatePositionFromList () {
+	Vector3 CalculatePositionFromList () {
 		var rand = new System.Random();
 		int index = rand.Next(positionsList.Count);
 		Vector3 pos = positionsList [index];
 		return pos;
+	}
+
+	GameObject healthBarSlider;  //reference for slider
+	public bool isGameOver = false; //flag to see if game is over
+	
+	// cat was hit
+	void OnTriggerEnter(Collider obj) {
+		
+		// if cat is still alive
+		if (EvilHealth.CurrentHealth > 0 && !EvilHealth.IsDead) {
+			BlinkEvilHit(this); 
+			
+			healthBarSlider = GameObject.FindGameObjectWithTag("EvilSlider");
+			Slider slider = healthBarSlider.GetComponent<Slider> ();
+			if(obj.gameObject.tag == "Projectile" && slider.value > 0){
+				slider.value -= 10f;  //reduce health
+				EvilHealth.UpdateCurrentHealthWhenHit();
+			}
+		} else {
+			isGameOver = true;
+			Destroy(this.gameObject);
+			
+			//EnemyDropsDead();
+		}
+	}
+	
+	void BlinkEvilHit(EvilCat obj)
+	{
+		Debug.Log ("Wanna BLINK?");
+		StartCoroutine( Blinking (obj, .2f));
+	}
+	
+	IEnumerator Blinking(EvilCat obj, float seconds)
+	{
+		float duration = 8;
+		while (duration > 0f) {
+			obj.transform.GetComponent<Renderer>().enabled = !obj.transform.GetComponent<Renderer>().enabled;
+			
+			yield return new WaitForSeconds (seconds); 
+			duration --;
+		}
+		obj.transform.GetComponent<Renderer> ().enabled = true;
 	}
 }

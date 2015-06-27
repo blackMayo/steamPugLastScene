@@ -46,7 +46,7 @@ public class EvilHealth : MonoBehaviour{
 	public static void UpdateCurrentHealthWhenHit() {
 		currentHealth -= healthDecrease;
 		
-		if (currentHealth < 0) {
+		if (currentHealth <= 0) {
 			isDead = true;
 			
 			// code for what comes after death

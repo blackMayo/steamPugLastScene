@@ -22,13 +22,13 @@ public class TestEvilCat : MonoBehaviour
 	}
 	
 	GameObject healthBarSlider;  //reference for slider
-	private bool isGameOver = false; //flag to see if game is over
+	public bool isGameOver = false; //flag to see if game is over
 	
 	// cat was hit
 	void OnTriggerEnter(Collider obj) {
 	
 		// if cat is still alive
-		if (EvilHealth.CurrentHealth > 0 && !EvilHealth.IsDead) {
+		if (!EvilHealth.IsDead && EvilHealth.CurrentHealth > 0 ) {
 			BlinkEnemy(this); 
 
 			healthBarSlider = GameObject.FindGameObjectWithTag("EvilSlider");
@@ -38,6 +38,9 @@ public class TestEvilCat : MonoBehaviour
 				EvilHealth.UpdateCurrentHealthWhenHit();
 			}
 		} else {
+			isGameOver = true;
+			Destroy(this.gameObject);
+
 			//EnemyDropsDead();
 		}
 	}
