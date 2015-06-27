@@ -44,6 +44,7 @@ public class PlayerHealthDisplay : MonoBehaviour {
 					playerPrefabInstance.name = "Player";
 				} else {
 					isPlayerGameOver = true;
+					// TODO play Animation that Player is dead and GAME OVER --> go to first scene
 				}
 
 			}

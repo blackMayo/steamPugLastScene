@@ -20,9 +20,10 @@ public class EvilHealth : MonoBehaviour{
 				
 				//Tell unity not to destroy this object when loading a new scene!
 				DontDestroyOnLoad(_instance.gameObject);
-				
-				SetMaxHealth (100);
-				SetCurrentHealth (100);
+
+				//let EvilCat live a little longer than the pug
+				SetMaxHealth (145);
+				SetCurrentHealth (145);
 				evilIsDead = false;
 			}
 			

@@ -24,6 +24,7 @@ public class EvilHealthDisplay : MonoBehaviour {
 			Destroy(this.gameObject);
 			
 			//EnemyDropsDead();
+			// TODO Play Animation that Player won!
 		}
 	}
 
