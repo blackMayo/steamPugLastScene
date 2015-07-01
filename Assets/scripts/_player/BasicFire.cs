@@ -6,6 +6,8 @@ public class BasicFire : MonoBehaviour {
 	//set the prefab of the Projectile here
 	public GameObject projectilePrefab;
 
+	GameObject evilCat;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -15,13 +17,18 @@ public class BasicFire : MonoBehaviour {
 	void Update () {
 
 		if (Input.GetButtonDown ("Fire1")) {
+
+			evilCat = GameObject.FindGameObjectWithTag ("Evil");
+			transform.LookAt(evilCat.transform);
+			
 			GameObject projectileInstance;
 			projectileInstance = (GameObject)Instantiate(projectilePrefab, transform.position, transform.rotation);
 			projectileInstance.name = "Projectile";
-
+			
 			Rigidbody projectileRbInstance;
 			projectileRbInstance = projectileInstance.GetComponent<Rigidbody>();
-			projectileRbInstance.velocity = transform.TransformDirection(20, 0, 0);
+			const int SHOOTING_FORCE = 1500;
+			projectileRbInstance.AddForce(transform.forward * SHOOTING_FORCE);
 		}
 	
 	}

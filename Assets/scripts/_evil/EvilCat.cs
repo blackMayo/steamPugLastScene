@@ -10,13 +10,15 @@ public class EvilCat : MonoBehaviour
 	float lerpTime = 1f;
 	float currentLerpTime;
 	List<Vector3> positionsList = new List<Vector3> ();
-	
 	Vector3 newPositionFromList;
-	
 	Vector3 startPos;
 	Vector3 endPos;
 
 	EvilHealth evilHealth;
+
+	GameObject player;
+
+	public GameObject hairballPrefab;
 	
 	protected void Start() {
 		this.gameObject.AddComponent<EvilHealthDisplay>();
@@ -26,25 +28,55 @@ public class EvilCat : MonoBehaviour
 
 		// this is just used to instantiate the health of the evil cat as soon as the evil cat itself is instatiated
 		evilHealth = EvilHealth.Instance;
+
+		StartCoroutine(ShootAtPlayer());
+		StartCoroutine (MoveCat ());
 	}
 	
 	protected void Update() {
-		//reset when we press spacebar
-		// after shooting - insert FireHairBall in here!
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			CalculateNewPosition ();
-		}
-		
-		IncrementTimer ();
-		
+
+
+	}
+
+	IEnumerator ShootAtPlayer ()
+	{
+		player = GameObject.FindGameObjectWithTag ("Player");
+		Debug.Log ("SHOOT!");
+
+		transform.LookAt(player.transform);
+
+		GameObject hairballInstance;
+		hairballInstance = (GameObject)Instantiate(hairballPrefab, transform.position, transform.rotation);
+		hairballInstance.name = "HairBall";
+
+		Rigidbody hairballRbInstance;
+		hairballRbInstance = hairballInstance.GetComponent<Rigidbody>();
+		const int SHOOTING_FORCE = 1500;
+		hairballRbInstance.AddForce(transform.forward * SHOOTING_FORCE);
+
+
+		Debug.Log ("Wait 5 secs before moving on");
+		yield return new WaitForSeconds(5.0f);
+	}
+	
+	IEnumerator MoveCat()
+	{
+		MoveCatToNewPosition ();
+		Debug.Log ("MOVED! Wait 5 secs before shooting");
+		yield return new WaitForSeconds(5.0f);
+	}
+
+	void MoveCatToNewPosition ()
+	{
+		CalculateNewPosition ();
+		IncrementTimer ();		
 		//lerp!
 		float perc = currentLerpTime / lerpTime;
 		
 		var newPosition = Vector3.Lerp (startPos, endPos, perc);
 		transform.position = newPosition;
-		
 	}
-	
+
 	void CalculateNewPosition ()
 	{
 		currentLerpTime = 0f;

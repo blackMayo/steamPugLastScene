@@ -3,25 +3,16 @@ using System.Collections;
 
 public class ProjectileCollision : MonoBehaviour {
 
-	/*
-	void OnCollisionEnter (Collision collision) {
-
-		Debug.Log ("Detected collision with: " + collision.gameObject.name);
-		if (collision.gameObject.tag == "Evil") {
-			Debug.Log ("Detected collision the EvilCat!");
-		}
-		Destroy (this.gameObject);
-	}
-
-	*/
 	void OnTriggerEnter(Collider obj) {
-		if (obj.gameObject.tag == "Evil") {
-
-			//obj.gameObject.transform.rotation = Quaternion.identity;
-			//obj.gameObject.transform.position = new Vector3(20f, -3f, 8f);
-
+		if (obj.gameObject.tag == "Evil" || obj.gameObject.tag == "HairBall") {
 			// destroy the projectile
 			Destroy(this.gameObject);
 		}
+	}
+	
+	void OnBecameInvisible() {
+		// destroy the hairball
+		Debug.Log ("INIVISIBLE");
+		Destroy(this.gameObject);
 	}
 }	
