@@ -13,7 +13,6 @@ public class EvilCat : MonoBehaviour
 
 	float timer = 0.0f;
 	float timerMax = 3.0f;
-	bool enemyHasMoved = false;
 
 	protected void Start() {
 		// this is just used to instantiate the health of the evil cat (class with static methods) as soon as the evil cat itself is instatiated
