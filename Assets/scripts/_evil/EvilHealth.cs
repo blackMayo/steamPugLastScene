@@ -8,8 +8,7 @@ public class EvilHealth : MonoBehaviour{
 	static int maxHealth;
 	static int currentHealth;
 	static int healthDecrease = 10;
-	public static bool evilIsDead;	
-	
+
 	public static EvilHealth Instance
 	{
 		get
@@ -24,7 +23,6 @@ public class EvilHealth : MonoBehaviour{
 				//let EvilCat live a little longer than the pug
 				SetMaxHealth (145);
 				SetCurrentHealth (145);
-				evilIsDead = false;
 			}
 			
 			return _instance;
@@ -32,44 +30,24 @@ public class EvilHealth : MonoBehaviour{
 	}
 	
 	// +++++++++++++++ PUBLIC METHODS +++++++++++++++ 
-	public static int MaxHealth {
-		get {
-			return maxHealth;
-		}
-	}
 	
 	public static int CurrentHealth {
 		get {
+			LogCurrentHealth ();
 			return currentHealth;
 		}
-	}
-	
-	public static void UpdateCurrentHealthWhenHit() {
-		currentHealth -= healthDecrease;
-		
-		if (currentHealth <= 0) {
-			evilIsDead = true;
-			
-			// code for what comes after death
+		set {
+			currentHealth -= value;
 		}
 	}
-	
-	public static bool IsDead {
-		get {
-			return evilIsDead;
-		}
-	}
-	
-	public static void setIsDead(bool isDead) {
-		evilIsDead = isDead;
-	}
-	
+
 	// +++++++++++++++ PRIVATE METHODS +++++++++++++++
 	// which will be primarily used inside this class
 	static void SetMaxHealth(int maxHealthAmount) {
 		maxHealth += maxHealthAmount;
+
+		Debug.Log ("MaxHealth = " + maxHealth);
 	}
-	
 	
 	static void SetCurrentHealth(int currentHealthAmount) {
 		currentHealth += currentHealthAmount;
@@ -77,5 +55,11 @@ public class EvilHealth : MonoBehaviour{
 		if (currentHealth > maxHealth) {
 			currentHealth = maxHealth;
 		}
+		LogCurrentHealth ();
+	}
+
+	private static void LogCurrentHealth ()
+	{
+		Debug.Log ("CurrentHealth = " + currentHealth);
 	}
 }
