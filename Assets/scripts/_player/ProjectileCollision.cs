@@ -11,8 +11,7 @@ public class ProjectileCollision : MonoBehaviour {
 	}
 	
 	void OnBecameInvisible() {
-		// destroy the hairball
-		Debug.Log ("INIVISIBLE");
+		// destroy the projectile
 		Destroy(this.gameObject);
 	}
 }	

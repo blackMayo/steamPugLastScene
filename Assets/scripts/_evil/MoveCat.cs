@@ -11,31 +11,36 @@ public class MoveCat : MonoBehaviour {
 	Vector3 startPos;
 	Vector3 endPos;
 
-	// Use this for initialization
-	void Start () {
-		AddVectorsToList ();
-		CalculateNewPosition ();	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	bool hasMoved = false;
 
-	public void MoveCatToNewPosition ()
+	public bool HasMoved {
+		get {
+			return hasMoved;
+		}
+		set {
+			hasMoved = value;
+		}
+	}
+	
+	public void MoveCatToNewPosition (EvilBasicFire fire)
 	{
-		CalculateNewPosition ();
 		IncrementTimer ();		
 		//lerp!
 		float perc = currentLerpTime / lerpTime;
 		
 		var newPosition = Vector3.Lerp (startPos, endPos, perc);
-		transform.position = newPosition;
-		
+		transform.position = newPosition;		
+
+		if (transform.position == newPosition && !fire.HasShot) {
+			fire.ShootAtPlayer ();
+			fire.HasShot = true;
+			hasMoved = false;
+		}
 	}
 	
-	void CalculateNewPosition ()
+	public void CalculateNewPosition ()
 	{
+		hasMoved = true;
 		currentLerpTime = 0f;
 		startPos = transform.position;
 		newPositionFromList = CalculatePositionFromList ();
@@ -57,7 +62,7 @@ public class MoveCat : MonoBehaviour {
 		}
 	}
 	
-	void AddVectorsToList ()
+	public void AddVectorsToList ()
 	{
 		var ladder = GameObject.Find ("Quad_Ladder").transform.position;
 		positionsList.Add (new Vector3(ladder.x, ladder.y + 1.17f, ladder.z)); // Ladder

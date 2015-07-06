@@ -33,7 +33,6 @@ public class EvilHealth : MonoBehaviour{
 	
 	public static int CurrentHealth {
 		get {
-			LogCurrentHealth ();
 			return currentHealth;
 		}
 		set {
@@ -45,8 +44,6 @@ public class EvilHealth : MonoBehaviour{
 	// which will be primarily used inside this class
 	static void SetMaxHealth(int maxHealthAmount) {
 		maxHealth += maxHealthAmount;
-
-		Debug.Log ("MaxHealth = " + maxHealth);
 	}
 	
 	static void SetCurrentHealth(int currentHealthAmount) {
@@ -55,11 +52,5 @@ public class EvilHealth : MonoBehaviour{
 		if (currentHealth > maxHealth) {
 			currentHealth = maxHealth;
 		}
-		LogCurrentHealth ();
-	}
-
-	private static void LogCurrentHealth ()
-	{
-		Debug.Log ("CurrentHealth = " + currentHealth);
 	}
 }

@@ -4,10 +4,10 @@ using System.Collections;
 public class EvilBasicFire : MonoBehaviour {
 
 	GameObject player;
+	bool hasShot;
 
 	public GameObject hairballPrefab;
 
-	
 	// Use this for initialization
 	void Start () {
 	
@@ -18,12 +18,22 @@ public class EvilBasicFire : MonoBehaviour {
 	
 	}
 
+	public bool HasShot {
+		get {
+			return hasShot;
+		}
+		set {
+			hasShot = value;
+		}
+	}
+
 	public void ShootAtPlayer() {
 		StartCoroutine(Shoot());
 	}
 
 	IEnumerator Shoot ()
 	{
+		hasShot = true;
 		player = GameObject.FindGameObjectWithTag ("Player");
 		Debug.Log ("SHOOT!");
 		
@@ -37,9 +47,9 @@ public class EvilBasicFire : MonoBehaviour {
 		hairballRbInstance = hairballInstance.GetComponent<Rigidbody>();
 		const int SHOOTING_FORCE = 1500;
 		hairballRbInstance.AddForce(transform.forward * SHOOTING_FORCE);
-		
-		
-		Debug.Log ("Wait 0.5 secs before moving on");
-		yield return new WaitForSeconds(0.5f);
+
+		yield return new WaitForSeconds(2.3f);
+
+		hasShot = false;
 	}
 }
