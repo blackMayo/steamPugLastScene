@@ -36,7 +36,7 @@ public class EvilHealth : MonoBehaviour{
 			return currentHealth;
 		}
 		set {
-			currentHealth -= value;
+			currentHealth -= value; //reduce currentHealth by value!
 		}
 	}
 
