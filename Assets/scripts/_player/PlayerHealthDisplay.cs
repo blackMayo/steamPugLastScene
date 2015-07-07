@@ -31,7 +31,6 @@ public class PlayerHealthDisplay : MonoBehaviour {
 	
 	void BlinkPlayer(Player obj)
 	{
-		Debug.Log ("Blink Player!!!");
 		StartCoroutine( Blinking (obj, .2f));
 	}
 	

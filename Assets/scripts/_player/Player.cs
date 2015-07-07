@@ -26,7 +26,7 @@ public class Player : MonoBehaviour {
 		healthDisplay.HelmetsTextController ();	
 
 		if (PlayerHealth.CurrentHealth < 5) {
-			Debug.Log ("I am Dead");
+			Debug.Log ("Player is Dead");
 			Destroy (this.gameObject);
 		}
 	}

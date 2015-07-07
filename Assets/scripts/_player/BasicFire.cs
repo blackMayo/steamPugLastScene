@@ -15,11 +15,10 @@ public class BasicFire : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		evilCat = GameObject.FindGameObjectWithTag ("Evil");
+		transform.LookAt(evilCat.transform);
 
-		if (Input.GetButtonDown ("Fire1")) {
-
-			evilCat = GameObject.FindGameObjectWithTag ("Evil");
-			transform.LookAt(evilCat.transform);
+		if (Input.GetButtonDown ("Fire1")) { //press left MouseButton to Shoot
 			
 			GameObject projectileInstance;
 			projectileInstance = (GameObject)Instantiate(projectilePrefab, transform.position, transform.rotation);
@@ -27,7 +26,7 @@ public class BasicFire : MonoBehaviour {
 			
 			Rigidbody projectileRbInstance;
 			projectileRbInstance = projectileInstance.GetComponent<Rigidbody>();
-			const int SHOOTING_FORCE = 1500;
+			const int SHOOTING_FORCE = 2000;
 			projectileRbInstance.AddForce(transform.forward * SHOOTING_FORCE);
 		}
 	

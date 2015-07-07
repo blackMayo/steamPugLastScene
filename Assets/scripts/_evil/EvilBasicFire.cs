@@ -34,9 +34,8 @@ public class EvilBasicFire : MonoBehaviour {
 	IEnumerator Shoot ()
 	{
 		hasShot = true;
+
 		player = GameObject.FindGameObjectWithTag ("Player");
-		Debug.Log ("SHOOT!");
-		
 		transform.LookAt(player.transform);
 		
 		GameObject hairballInstance;
@@ -45,7 +44,7 @@ public class EvilBasicFire : MonoBehaviour {
 		
 		Rigidbody hairballRbInstance;
 		hairballRbInstance = hairballInstance.GetComponent<Rigidbody>();
-		const int SHOOTING_FORCE = 1500;
+		const int SHOOTING_FORCE = 1800;
 		hairballRbInstance.AddForce(transform.forward * SHOOTING_FORCE);
 
 		yield return new WaitForSeconds(2.3f);

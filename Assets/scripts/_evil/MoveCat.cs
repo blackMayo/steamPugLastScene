@@ -50,7 +50,6 @@ public class MoveCat : MonoBehaviour {
 		else {
 			endPos = newPositionFromList;
 		}
-		Debug.Log ("StartPosition = " + startPos + " Endposition = " + endPos);
 	}
 	
 	void IncrementTimer ()
